@@ -1,7 +1,8 @@
 // Navigation component of the website
 "use client";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
+import { useSound } from "../../lib/useSound";
 
 const sections = [
   { id: "home", label: "Home" },
@@ -11,6 +12,26 @@ const sections = [
 ];
 
 export default function Nav({ activeSection }) {
+  const playNavScroll = useSound("/sounds/scroll.mp3", { volume: 0.2, cooldownMs: 120 });
+  const playHoverGlow = useSound("/sounds/hover.mp3", { volume: 0, cooldownMs: 120 });
+  const previousSectionRef = useRef("");
+  const skipNextEffectSoundRef = useRef(false);
+
+  useEffect(() => {
+    if (!activeSection) return;
+
+    const previous = previousSectionRef.current;
+    if (previous && previous !== activeSection) {
+      if (skipNextEffectSoundRef.current) {
+        skipNextEffectSoundRef.current = false;
+      } else {
+        playNavScroll();
+      }
+    }
+
+    previousSectionRef.current = activeSection;
+  }, [activeSection, playNavScroll]);
+
   return (
     <nav className="fixed top-0 left-0 h-full w-24 flex flex-col items-center justify-center z-50">
       {/* Track */}
@@ -41,11 +62,14 @@ export default function Nav({ activeSection }) {
                   fontWeight: isActive ? 700 : 500,
                   fontSize: isActive ? "1.15rem" : "1rem",
                 }}
+                onMouseEnter={playHoverGlow}
                 onClick={e => {
                   e.preventDefault();
+                  skipNextEffectSoundRef.current = true;
+                  playNavScroll();
                   const el = document.getElementById(section.id);
                   if (el) {
-                    el.scrollIntoView({ behavior: "smooth", block: "center" });
+                    el.scrollIntoView({ behavior: "smooth", block: "start" });
                   }
                 }}
               >

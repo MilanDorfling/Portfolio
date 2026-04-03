@@ -30,7 +30,7 @@ export default function Hero() {
       <div className="flex-1 flex justify-center md:justify-end mt-10 md:mt-0 md:ml-12">
         <ProfileCard
           name=""
-          title="Junior Frontend Developer"
+          title="Frontend Developer"
           profileUrl="https://www.linkedin.com/in/milan-dorfling-93a02a265/"
           handle="milandorfling"
           status="Online"

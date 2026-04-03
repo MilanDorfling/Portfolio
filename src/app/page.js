@@ -1,18 +1,17 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { DotBackgroundDemo } from "./UI/background";
-import { HeroParallax } from "./UI/hero-parallax";
 import Nav from "./components/Nav";
 import Hero from "./components/Hero";
 import About from "./components/About";
 import Projects from "./components/Projects";
-import { projects } from "../lib/projects-data";
+import Contact from "./components/Contact";
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState("");
 
   useEffect(() => {
-    const sectionIds = ["home", "about", "projects"]; // Add more as needed
+    const sectionIds = ["home", "about", "projects", "contact"];
 
     const handleScroll = () => {
       // If at the very bottom, set last section active
@@ -43,15 +42,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <DotBackgroundDemo className="-z-10" />
-      <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
-        <HeroParallax
-          products={projects}
-          isActivated={activeSection === "projects"}
-          showHeader={false}
-          className="h-full min-h-screen py-24"
-        />
-      </div>
+      <DotBackgroundDemo className="-z-20" />
       {/* adding a mask so elements have a subtle fade as it scrolls in or out */}
       <div className="absolute inset-0 bg-linear-to-b from-black/50 to-transparent pointer-events-none z-10" />
       <Nav activeSection={activeSection} />
@@ -59,6 +50,7 @@ export default function Home() {
         <Hero id="home" />
         <About id="about" />
         <Projects id="projects" />
+        <Contact id="contact" />
       </main>
     </div>
   );
