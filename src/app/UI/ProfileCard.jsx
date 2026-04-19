@@ -432,7 +432,7 @@ const ProfileCardComponent = ({
         <section
           className="grid relative overflow-hidden backface-hidden"
           style={{
-            height: '80svh',
+            height: 'clamp(20rem, 62svh, 33.75rem)',
             maxHeight: '540px',
             aspectRatio: '0.718',
             borderRadius: cardRadius,

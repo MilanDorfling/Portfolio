@@ -18,7 +18,7 @@ html {
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #020202;
     --foreground: #ededed;
   }
 }
@@ -26,5 +26,25 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-roboto), Arial, Helvetica, sans-serif;
+}
+
+/* Keeps section content inside HeroSectionGrid A->D columns (64 to 832 on 880 viewBox). */
+.hero-grid-rail {
+  width: 100%;
+  padding-inline: clamp(1.25rem, 7.2727%, 4rem);
+}
+
+@keyframes rgbText {
+  0%   { color: #22d3ee; }
+  16%  { color: #f472b6; }
+  33%  { color: #a78bfa; }
+  49%  { color: #fbbf24; }
+  66%  { color: #34d399; }
+  82%  { color: #f87171; }
+  100% { color: #22d3ee; }
+}
+
+.rgb-text {
+  animation: rgbText 6s ease-in-out infinite;
 }
