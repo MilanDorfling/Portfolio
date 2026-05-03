@@ -70,7 +70,7 @@ const proficiencyDotColor = {
 
 export default function StackGrid({ selectedSkill, onSelectSkill }) {
   return (
-    <aside className="fixed top-0 left-0 h-full w-56 bg-[#020202] border-r border-white/8 flex flex-col pt-18 pb-8 shadow-xl z-30 overflow-y-auto">
+    <aside className="fixed top-0 left-0 h-full w-56 bg-[#020202] border-r border-white/8 hidden md:flex md:flex-col pt-18 pb-8 shadow-xl z-30 overflow-y-auto">
       {/* Header */}
       <div className="px-5 pt-6 pb-4">
         <h2 className="text-[10px] font-semibold text-white/30 tracking-[0.22em] uppercase">

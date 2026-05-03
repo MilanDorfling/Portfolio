@@ -120,7 +120,7 @@ export default function FeaturedProject() {
         </div>
 
         {/* Live iframe — eager because it's above the fold */}
-        <div className="relative w-full overflow-hidden border-b border-white/6" style={{ height: "36rem" }}>
+        <div className="relative w-full overflow-hidden border-b border-white/6 h-[18rem] sm:h-[28rem] lg:h-[36rem]">
           <iframe
             src="https://vslman.co.za"
             className="w-full h-full border-0 pointer-events-none"
@@ -233,7 +233,7 @@ export default function FeaturedProject() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.3 + i * 0.12 }}
             viewport={{ once: true }}
-            className={`px-6 py-5 border-r border-white/6 last:border-r-0 relative overflow-hidden ${
+            className={`px-3 py-4 sm:px-6 sm:py-5 border-r border-white/6 last:border-r-0 relative overflow-hidden ${
               s.accent ? "bg-white/2" : ""
             }`}
           >

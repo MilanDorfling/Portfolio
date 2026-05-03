@@ -3,7 +3,7 @@ import { motion } from "motion/react";
 
 export default function SectionDivider({ label }) {
   return (
-    <div className="relative my-62 flex items-center gap-4">
+    <div className="relative my-16 sm:my-32 lg:my-62 flex items-center gap-4">
 
       {/* Left line */}
       <motion.div
