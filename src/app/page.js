@@ -49,13 +49,13 @@ export default function Home() {
     <SectionBackground fallback={<DotBackground />}>
       <div className="relative isolate min-h-screen w-full bg-zinc-50 text-foreground dark:bg-black">
         <main className="relative z-20 mx-auto w-full max-w-500 px-[clamp(1rem,3.2vw,2.75rem)] pb-24 pt-24 sm:px-[clamp(1.25rem,3.6vw,3rem)] lg:pt-28">
-          <div className="grid items-start gap-8 lg:grid-cols-[auto_minmax(0,1fr)] lg:gap-10">
+          <div className="grid items-start gap-4 lg:grid-cols-[auto_minmax(0,1fr)] lg:gap-10">
             <SectionNav
               sections={homeSectionNavItems}
               activeSection={activeSection}
             />
 
-            <div className="min-w-0 space-y-10 lg:space-y-44 mt-10">
+            <div className="min-w-0 space-y-10 lg:space-y-44 lg:mt-10">
               {homeSections.map(({ id, Component }) => (
                 <Component key={id} id={id} />
               ))}
