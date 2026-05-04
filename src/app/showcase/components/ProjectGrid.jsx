@@ -25,6 +25,8 @@ export const PROJECTS = [
   // },
 ];
 
+const CARD_PERSPECTIVE = 800;
+
 // ─── Single project card ──────────────────────────────────────────────────────
 
 function ProjectCard({ project, index }) {
@@ -61,7 +63,7 @@ function ProjectCard({ project, index }) {
       viewport={{ once: true }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      style={{ rotateX, rotateY, transformStyle: "preserve-3d", perspective: 800 }}
+      style={{ rotateX, rotateY, transformStyle: "preserve-3d", perspective: CARD_PERSPECTIVE }}
       className="group relative flex flex-col rounded-xl border border-white/10 bg-[#0c0c0c] overflow-hidden cursor-default"
     >
       {/* Card body */}
@@ -150,7 +152,7 @@ export default function ProjectGrid() {
 
       <div
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
-        style={{ perspective: "1000px" }}
+        style={{ perspective: `${CARD_PERSPECTIVE}px` }}
       >
         {PROJECTS.map((project, i) => (
           <ProjectCard key={project.name} project={project} index={i} />
