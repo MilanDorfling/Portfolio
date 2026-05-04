@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import FeaturedProject from "./components/FeaturedProject";
+import ProjectGrid, { PROJECTS } from "./components/ProjectGrid";
 import SectionDivider from "./components/SectionDivider";
 import CertProjects from "./components/Certifications";
 import ConstellationBackground from "../components/svg/ConstellationBackground";
@@ -23,12 +24,20 @@ export default function ShowcasePage() {
         </p>
       </div>
 
-      {/* Featured project */}
+      {/* Featured projects — add entries to FEATURED_PROJECTS in FeaturedProject.jsx */}
       <div className="mb-24 z-20">
         <FeaturedProject />
       </div>
 
-      {/* Section divider */}
+      {/* Personal / side projects — add entries to PROJECTS in ProjectGrid.jsx */}
+      {PROJECTS.length > 0 && (
+        <div className="mb-24 z-20">
+          <SectionDivider label="Other Projects" />
+          <ProjectGrid />
+        </div>
+      )}
+
+      {/* Certifications */}
       <div className="mb-16 z-20">
         <SectionDivider label="View my Certifications" />
         <CertProjects />

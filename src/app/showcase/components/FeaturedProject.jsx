@@ -4,6 +4,61 @@ import { motion, useInView } from "motion/react";
 import { FaGithub } from "react-icons/fa";
 import { TbExternalLink } from "react-icons/tb";
 
+// ─── Project data ────────────────────────────────────────────────────────────
+// Add new featured / client projects here. Each entry will render as a full
+// card with a live iframe preview, language breakdown, and a stats bar.
+//
+// Shape:
+//   name        – project title displayed in the card header
+//   description – short paragraph shown below the title
+//   liveUrl     – href for the "Visit site" button AND the iframe src
+//   githubUrl   – href for the GitHub button (omit or set "" to hide the button)
+//   browserUrl  – short URL shown in the fake browser address bar
+//   status      – badge text, e.g. "live" | "in progress" | "archived"
+//   languages   – array of { label, pct, color } — pct values should sum to 100
+//   stats       – array of { value, sup, label, sub, accent }
+export const FEATURED_PROJECTS = [
+  {
+    name: "VSL Manufacturing",
+    description:
+      "VSL needed a full rebuild — their existing site was outdated and didn't reflect the quality of their engineering work. I redesigned and developed the entire site from scratch: new information architecture, responsive layout, and a clean visual identity that matches the precision of their products.",
+    liveUrl: "https://vslman.co.za",
+    githubUrl: "https://github.com/MilanDorfling/vsl-manufacturing",
+    browserUrl: "vslman.co.za",
+    status: "live",
+    languages: [
+      { label: "React / JSX", pct: 68, color: "bg-cyan-400" },
+      { label: "CSS / Tailwind", pct: 22, color: "bg-sky-500" },
+      { label: "HTML", pct: 10, color: "bg-orange-400" },
+    ],
+    stats: [
+      { value: "1", sup: "st", label: "Paid client", sub: "Live since 2025", accent: true },
+      { value: "4", sup: "wks", label: "Build time", sub: "Solo developer", accent: true },
+      { value: "100", sup: "%", label: "Custom build", sub: "No templates or themes", accent: true },
+    ],
+  },
+  // ── Add your next featured project below ──────────────────────────────────
+  // {
+  //   name: "My Next Project",
+  //   description: "A short description of what the project is and why you built it.",
+  //   liveUrl: "https://example.com",
+  //   githubUrl: "https://github.com/MilanDorfling/my-next-project",
+  //   browserUrl: "example.com",
+  //   status: "live",
+  //   languages: [
+  //     { label: "Next.js", pct: 70, color: "bg-white" },
+  //     { label: "Tailwind", pct: 30, color: "bg-sky-500" },
+  //   ],
+  //   stats: [
+  //     { value: "3", sup: "mo", label: "Build time", sub: "Solo developer", accent: true },
+  //     { value: "500", sup: "+", label: "Users", sub: "Organic growth", accent: true },
+  //     { value: "100", sup: "%", label: "Custom build", sub: "No templates", accent: true },
+  //   ],
+  // },
+];
+
+// ─── Internal helpers ─────────────────────────────────────────────────────────
+
 // Counts from 0 to `to` once the element enters the viewport
 function CountUp({ to, delay = 0, duration = 1.2 }) {
   const [display, setDisplay] = useState(0);
@@ -43,38 +98,11 @@ const secondaryVariant = {
   animate: { opacity: 1 },
 };
 
-// Language breakdown — must sum to 100%
-const LANGUAGES = [
-  { label: "React / JSX", pct: 68, color: "bg-cyan-400" },
-  { label: "CSS / Tailwind", pct: 22, color: "bg-sky-500" },
-  { label: "HTML", pct: 10, color: "bg-orange-400" },
-];
+// ─── Single project card ──────────────────────────────────────────────────────
 
-const STATS = [
-  {
-    value: "1",
-    sup: "st",
-    label: "Paid client",
-    sub: "Live since 2025",
-    accent: true,       // visually highlighted
-  },
-  {
-    value: "4",
-    sup: "wks",
-    label: "Build time",
-    sub: "Solo developer",
-    accent: true,
-  },
-  {
-    value: "100",
-    sup: "%",
-    label: "Custom build",
-    sub: "No templates or themes",
-    accent: true,
-  },
-];
+function FeaturedProjectCard({ project }) {
+  const { name, description, liveUrl, githubUrl, browserUrl, status, languages, stats } = project;
 
-export default function FeaturedProject() {
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }}
@@ -89,9 +117,11 @@ export default function FeaturedProject() {
           Featured project
         </span>
         <span className="flex-1 h-px bg-white/6" />
-        <span className="text-[10px] uppercase tracking-[0.14em] text-emerald-400/60 font-mono">
-          ● live
-        </span>
+        {status && (
+          <span className="text-[10px] uppercase tracking-[0.14em] text-emerald-400/60 font-mono">
+            ● {status}
+          </span>
+        )}
       </div>
 
       {/* ── Main card ──────────────────────────────────────────────── */}
@@ -111,7 +141,7 @@ export default function FeaturedProject() {
                 <path d="M8 1a3 3 0 0 0-3 3v1H3.5A1.5 1.5 0 0 0 2 6.5v7A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5v-7A1.5 1.5 0 0 0 12.5 5H11V4a3 3 0 0 0-3-3zm0 1a2 2 0 0 1 2 2v1H6V4a2 2 0 0 1 2-2z"/>
               </svg>
               <span className="text-[11px] text-white/30 font-mono tracking-wide">
-                vslman.co.za
+                {browserUrl}
               </span>
             </div>
           </div>
@@ -119,12 +149,12 @@ export default function FeaturedProject() {
           <div className="w-13" />
         </div>
 
-        {/* Live iframe — eager because it's above the fold */}
+        {/* Live iframe */}
         <div className="relative w-full overflow-hidden border-b border-white/6 h-[18rem] sm:h-[28rem] lg:h-[36rem]">
           <iframe
-            src="https://vslman.co.za"
+            src={liveUrl}
             className="w-full h-full border-0 pointer-events-none"
-            title="VSL Manufacturing live preview"
+            title={`${name} live preview`}
             loading="eager"
           />
           {/* Subtle gradient fade at the bottom so the card body doesn't hard-cut */}
@@ -137,20 +167,16 @@ export default function FeaturedProject() {
           {/* Left — description + language bar */}
           <div>
             <h3 className="text-xl font-semibold text-white tracking-tight mb-2">
-              VSL Manufacturing
+              {name}
             </h3>
 
             <p className="text-sm text-white/45 leading-relaxed max-w-lg mb-4">
-              VSL needed a full rebuild — their existing site was outdated and
-              didn't reflect the quality of their engineering work. I redesigned
-              and developed the entire site from scratch: new information
-              architecture, responsive layout, and a clean visual identity that
-              matches the precision of their products.
+              {description}
             </p>
 
             {/* Language pills — percentage is the visual anchor */}
             <div className="flex items-center gap-2 flex-wrap">
-              {LANGUAGES.map((lang) => (
+              {languages.map((lang) => (
                 <div
                   key={lang.label}
                   className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/8 bg-white/3"
@@ -171,7 +197,7 @@ export default function FeaturedProject() {
           <div className="flex flex-row md:flex-col gap-3 md:items-end pt-0 md:pt-1">
 
             <motion.a
-              href="https://vslman.co.za"
+              href={liveUrl}
               target="_blank"
               rel="noopener noreferrer"
               whileHover="animate"
@@ -192,27 +218,29 @@ export default function FeaturedProject() {
               />
             </motion.a>
 
-            <motion.a
-              href="https://github.com/MilanDorfling/vsl-manufacturing"
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover="animate"
-              initial="initial"
-              className="relative"
-            >
-              <motion.span
-                variants={mainVariant}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                className="relative z-40 flex items-center justify-center gap-1.5 text-xs font-medium px-4 py-2 rounded-lg border border-white/10 bg-white/4 text-white/50 whitespace-nowrap hover:text-white/70 transition-colors"
+            {githubUrl && (
+              <motion.a
+                href={githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover="animate"
+                initial="initial"
+                className="relative"
               >
-                <FaGithub className="w-3.5 h-3.5" />
-                GitHub
-              </motion.span>
-              <motion.span
-                variants={secondaryVariant}
-                className="absolute inset-0 z-30 rounded-lg border border-dashed border-white/20 bg-transparent opacity-0"
-              />
-            </motion.a>
+                <motion.span
+                  variants={mainVariant}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  className="relative z-40 flex items-center justify-center gap-1.5 text-xs font-medium px-4 py-2 rounded-lg border border-white/10 bg-white/4 text-white/50 whitespace-nowrap hover:text-white/70 transition-colors"
+                >
+                  <FaGithub className="w-3.5 h-3.5" />
+                  GitHub
+                </motion.span>
+                <motion.span
+                  variants={secondaryVariant}
+                  className="absolute inset-0 z-30 rounded-lg border border-dashed border-white/20 bg-transparent opacity-0"
+                />
+              </motion.a>
+            )}
 
           </div>
         </div>
@@ -226,7 +254,7 @@ export default function FeaturedProject() {
         viewport={{ once: true }}
         className="mt-3 rounded-2xl border border-white/8 bg-[#0a0a0a] grid grid-cols-3 overflow-hidden"
       >
-        {STATS.map((s, i) => (
+        {stats.map((s, i) => (
           <motion.div
             key={i}
             initial={{ opacity: 0, y: 12 }}
@@ -279,5 +307,18 @@ export default function FeaturedProject() {
         ))}
       </motion.div>
     </motion.div>
+  );
+}
+
+// ─── Public export ────────────────────────────────────────────────────────────
+// Renders all entries in FEATURED_PROJECTS, separated by a small gap.
+
+export default function FeaturedProject() {
+  return (
+    <div className="flex flex-col gap-24">
+      {FEATURED_PROJECTS.map((project) => (
+        <FeaturedProjectCard key={project.name} project={project} />
+      ))}
+    </div>
   );
 }
