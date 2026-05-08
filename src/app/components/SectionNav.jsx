@@ -2,7 +2,7 @@
 
 import React from "react";
 
-export default function SectionNav({ sections, activeSection }) {
+export default function SectionNav({ sections, activeSection, mobileOnly = false, desktopOnly = false }) {
   if (!sections?.length) return null;
 
   const scrollToSection = (id) => {
@@ -18,9 +18,10 @@ export default function SectionNav({ sections, activeSection }) {
   return (
     <>
       {/* Mobile horizontal pill nav */}
+      {!desktopOnly && (
       <nav
         aria-label="Section navigation"
-        className="flex lg:hidden gap-2 overflow-x-auto pb-1 -mx-1 px-1"
+        className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1"
       >
         {sections.map((section) => {
           const active = activeSection === section.id;
@@ -41,8 +42,10 @@ export default function SectionNav({ sections, activeSection }) {
           );
         })}
       </nav>
+      )}
 
       {/* Desktop sticky sidebar */}
+      {!mobileOnly && (
       <aside className="sticky top-1/2 z-30 hidden -translate-y-1/2 self-start lg:block">
         <nav
           aria-label="Section navigation"
@@ -83,6 +86,7 @@ export default function SectionNav({ sections, activeSection }) {
           </ul>
         </nav>
       </aside>
+      )}
     </>
   );
 }

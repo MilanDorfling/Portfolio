@@ -49,10 +49,21 @@ export default function Home() {
     <SectionBackground fallback={<DotBackground />}>
       <div className="relative isolate min-h-screen w-full bg-zinc-50 text-foreground dark:bg-black">
         <main className="relative z-20 mx-auto w-full max-w-500 px-[clamp(1rem,3.2vw,2.75rem)] pb-24 pt-24 sm:px-[clamp(1.25rem,3.6vw,3rem)] lg:pt-28">
+
+          {/* Sticky mobile section nav — outside the grid so sticky works correctly */}
+          <div className="lg:hidden sticky top-[4.5rem] z-30 -mx-[clamp(1rem,3.2vw,2.75rem)] sm:-mx-[clamp(1.25rem,3.6vw,3rem)] px-[clamp(1rem,3.2vw,2.75rem)] sm:px-[clamp(1.25rem,3.6vw,3rem)] bg-zinc-950/90 backdrop-blur-md border-b border-white/5 py-1.5 mb-4">
+            <SectionNav
+              sections={homeSectionNavItems}
+              activeSection={activeSection}
+              mobileOnly
+            />
+          </div>
+
           <div className="grid items-start gap-4 lg:grid-cols-[auto_minmax(0,1fr)] lg:gap-10">
             <SectionNav
               sections={homeSectionNavItems}
               activeSection={activeSection}
+              desktopOnly
             />
 
             <div className="min-w-0 space-y-10 lg:space-y-44 lg:mt-10">
