@@ -6,9 +6,9 @@ export default function SectionNav({ sections, activeSection, onSectionChange, m
   if (!sections?.length) return null;
 
   const scrollToSection = (id) => {
-    onSectionChange?.(id);
     const el = document.getElementById(id);
     if (el) {
+      onSectionChange?.(id);
       el.scrollIntoView({ behavior: "smooth", block: "start" });
       if (window.location.hash) {
         history.replaceState(null, "", window.location.pathname + window.location.search);
