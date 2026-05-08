@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import SectionNav from "./components/SectionNav";
 import { DotBackground, SectionBackground } from "./components/svg";
 import { homeSections, homeSectionNavItems } from "./home";
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState(homeSectionNavItems[0].id);
+  const intersectingIds = useRef({});
 
   const sectionIds = useMemo(
     () => homeSectionNavItems.map((section) => section.id),
@@ -22,18 +23,18 @@ export default function Home() {
 
     const observer = new IntersectionObserver(
       (entries) => {
-        const visibleEntries = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        entries.forEach((entry) => {
+          intersectingIds.current[entry.target.id] = entry.isIntersecting;
+        });
 
-        if (visibleEntries.length > 0) {
-          setActiveSection(visibleEntries[0].target.id);
-        }
+        // Always pick the topmost section (first in list) that is currently visible
+        const active = sectionIds.find((id) => intersectingIds.current[id]);
+        if (active) setActiveSection(active);
       },
       {
         root: null,
-        rootMargin: "-30% 0px -45% 0px",
-        threshold: [0.2, 0.45, 0.7],
+        rootMargin: "0px 0px -50% 0px",
+        threshold: 0,
       },
     );
 
@@ -59,6 +60,7 @@ export default function Home() {
             <SectionNav
               sections={homeSectionNavItems}
               activeSection={activeSection}
+              onSectionChange={setActiveSection}
               mobileOnly
             />
           </div>
@@ -67,6 +69,7 @@ export default function Home() {
             <SectionNav
               sections={homeSectionNavItems}
               activeSection={activeSection}
+              onSectionChange={setActiveSection}
               desktopOnly
             />
 

@@ -2,13 +2,14 @@
 
 import React from "react";
 
-export default function SectionNav({ sections, activeSection, mobileOnly = false, desktopOnly = false }) {
+export default function SectionNav({ sections, activeSection, onSectionChange, mobileOnly = false, desktopOnly = false }) {
   if (!sections?.length) return null;
 
   const scrollToSection = (id) => {
+    onSectionChange?.(id);
     const el = document.getElementById(id);
     if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "center" });
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
       if (window.location.hash) {
         history.replaceState(null, "", window.location.pathname + window.location.search);
       }
