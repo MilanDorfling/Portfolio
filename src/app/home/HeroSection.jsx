@@ -116,19 +116,17 @@ export default function HeroSection({ id }) {
             transition={{ duration: 0.6, delay: 0.2, ease: EASE }}
             className="w-full flex justify-center lg:justify-end lg:shrink-0"
           >
-            <div className="w-full max-w-68 sm:max-w-76 lg:max-w-84 mx-auto lg:mx-0">
-              <ProfileCard
-                avatarUrl="/assets/pictures/portfolio2.jpg"
-                miniAvatarUrl="/assets/pictures/portfolio2.jpg"
-                iconUrl="/assets/pictures/codepattern.JPG"
-                grainUrl="/assets/pictures/codepattern.JPG"
-                name=""
-                title=""
-                handle="milandorfling"
-                status="Open to work"
-                contactText="Let us talk"
-              />
-            </div>
+            <ProfileCard
+              avatarUrl="/assets/pictures/portfolio2.jpg"
+              miniAvatarUrl="/assets/pictures/portfolio2.jpg"
+              iconUrl="/assets/pictures/codepattern.JPG"
+              grainUrl="/assets/pictures/codepattern.JPG"
+              name=""
+              title=""
+              handle="milandorfling"
+              status="Open to work"
+              contactText="Let us talk"
+            />
           </motion.div>
 
         </div>
